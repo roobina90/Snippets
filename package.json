@@ -1,0 +1,25 @@
+{
+  "name": "snippets",
+  "version": "1.0.0",
+  "description": "shitty code",
+  "main": "oopfp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/roobina90/Snippets.git"
+  },
+  "keywords": [
+    "shit"
+  ],
+  "author": "roobina90",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/roobina90/Snippets/issues"
+  },
+  "homepage": "https://github.com/roobina90/Snippets#readme",
+  "dependencies": {
+    "ramda": "^0.22.1"
+  }
+}
