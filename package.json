@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "shitty code",
   "main": "oopfp.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/roobina90/Snippets.git"
@@ -20,6 +17,14 @@
   },
   "homepage": "https://github.com/roobina90/Snippets#readme",
   "dependencies": {
-    "ramda": "^0.22.1"
+    "ramda": "^0.22.1",
+    "accounting": "^0.4.1",
+    "chai": "^1.9.1"
+  },
+  "devDependencies": {
+    "mocha": "^1.17.1"
+  },
+  "scripts": {
+    "test": "mocha **/*_spec.js"
   }
 }
