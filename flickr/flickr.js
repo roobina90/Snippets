@@ -40,11 +40,28 @@ require([
                 term + '&format=json&jsoncallback=?';
         };
 
+
         var mediaUrl = _.compose(_.prop('m'), _.prop('media'));
 
-        var srcs = _.compose(_.map(mediaUrl), _.prop('items'));
+        // var srcs = _.compose(_.map(mediaUrl), _.prop('items'));
 
-        var images = _.compose(_.map(img), srcs);
+        // var images = _.compose(_.map(img), srcs);
+
+        // var mediaUrl = _.compose(_.prop('m'), _.prop('media'));
+
+        // var images = _.compose(_.map(img), _.map(mediaUrl), _.prop('items'));
+
+        // var mediaUrl = _.compose(_.prop('m'), _.prop('media'));
+
+        // var images = _.compose(_.map(_.compose(img, mediaUrl)), _.prop('items'));
+
+        var mediaUrl = _.compose(_.prop('m'), _.prop('media'));
+
+        var mediaToImg = _.compose(img, mediaUrl);
+
+        var images = _.compose(_.map(mediaToImg), _.prop('items'));
+
+
         var renderImages = _.compose(Impure.setHtml('body'), images);
         var app = _.compose(Impure.getJSON(renderImages), url);
 
