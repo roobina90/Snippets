@@ -1,16 +1,10 @@
 var Identity = require('./identity');
 var Maybe = require('./maybe');
 var Either = require('./either');
+var IO = require('./IO');
 var assert = require("chai").assert;
 var _ = require("ramda");
 
-
-
-// // Left('rain')
-
-
-
-// // Left('rolls eyes...')
 
 
 describe("Either Functor", function () {
