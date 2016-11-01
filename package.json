@@ -17,9 +17,10 @@
   },
   "homepage": "https://github.com/roobina90/Snippets#readme",
   "dependencies": {
-    "ramda": "^0.22.1",
     "accounting": "^0.4.1",
-    "chai": "^1.9.1"
+    "chai": "^1.9.1",
+    "data.task": "^3.1.1",
+    "ramda": "^0.22.1"
   },
   "devDependencies": {
     "mocha": "^1.17.1"
