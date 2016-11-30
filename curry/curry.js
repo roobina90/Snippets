@@ -1,6 +1,11 @@
 var _ = require('ramda');
 
 
+var match = _.curry(function(what, x) {
+    return x.match(what);
+});
+
+
 // Exercise 1
 //==============
 // Refactor to remove all arguments by partially applying the function
