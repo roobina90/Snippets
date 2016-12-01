@@ -1,40 +1,8 @@
+
+require("./support.js");
+var path = require('path');
 var Task = require('data.task');
-var Identity = require("../functors/identity");
-var Maybe = require("../functors/maybe");
-var Either = require("../functors/either");
-var Left = Either.Left;
-var Right = Either.Right;
-var IO = require("../functors/IO");
 var _ = require('ramda');
-
-either = _.curry(function(f, g, e) {
-  switch(e.constructor) {
-    case Left: return f(e.__value);
-    case Right: return g(e.__value);
-  }
-});
-
-// overwriting join from pt 1
-var join = function(m){ return m.join(); };
-
-var chain = _.curry(function(f, m){
-  return m.map(f).join(); // or compose(join, map(f))(m)
-});
-
-var liftA2 = _.curry(function(f, a1, a2){
-  return a1.map(f).ap(a2);
-});
-
-var liftA3 = _.curry(function(f, a1, a2, a3){
-  return a1.map(f).ap(a2).ap(a3);
-});
-
-
-Task.prototype.join = function(){ return this.chain(_.identity); }
-
-
-
-
 
 
 // require('../../support');
@@ -75,7 +43,7 @@ var pureLog = function(x) {
   });
 }
 
-var ex2 = undefined;
+var ex2 = _.compose(chain(_.compose(pureLog, _.last, _.split(path.sep))), getFile);
 
 
 
@@ -99,7 +67,7 @@ var getComments = function(i) {
   });
 }
 
-var ex3 = undefined;
+var ex3 = _.compose(chain(_.compose(getComments, _.prop("id"))),getPost);
 
 
 // Exercise 4
@@ -130,7 +98,7 @@ var validateEmail = function(x){
 }
 
 //  ex4 :: Email -> Either String (IO String)
-var ex4 = undefined;
+var ex4 = _.compose(_.map(_.compose(chain(emailBlast), addToMailingList)), validateEmail)
 
 
 module.exports = {ex1: ex1, ex2: ex2, ex3: ex3, ex4: ex4, user: user}

@@ -1,11 +1,7 @@
 //require('../../support');
 var Task = require('data.task');
-var Identity = require("../functors/identity");
-var Maybe = require("../functors/maybe");
-var Either = require("../functors/either");
-var Left = Either.Left;
-var Right = Either.Right;
-var IO = require("../functors/IO");
+
+require("./support.js");
 
 var E = require('./monad_exercises');
 var assert = require("chai").assert
