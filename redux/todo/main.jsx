@@ -21,7 +21,7 @@ const visibilityFilter = (
         case "SET_VISIBILITY_FILTER":
             return action.filter;
         default:
-            return true;
+            return "SHOW_ALL";
     }
 };
 
@@ -29,7 +29,7 @@ const visibilityFilter = (
 const todo = (state, action) => {
     switch (action.type) {
         case "ADD_TODO":
-            console.log(action);
+            //console.log(action);
             return {
                 id: action.id,
                 text: action.text,
@@ -103,21 +103,35 @@ const FilterLink = ({
         onClick = {
             e => {
                 e.preventDefault();
-                store.dispatch({
-                    type: "Set_VISIBLITY_FILTER",
+                storeToDo.dispatch({
+                    type: "SET_VISIBILITY_FILTER",
                     filter
                 });
             }
         }>{children}</a>);
 }
 
+const getVisibleTodos = (todos, filter) => 
+ {
+     //console.log(filter);
+     switch(filter) {
+         case "SHOW_ALL":
+         return todos;
+         case "SHOW_COMPLETED":
+         return todos.filter(t=>t.completed);
+         case "SHOW_ACTIVE":
+         return todos.filter(t=>!t.completed);
+     }
+ }
 let nextTodoId = 0;
 
 
 class TodoApp extends Component {
     render() {
-
-        console.log(this.props.todos);
+       // console.log(this.props.todos);    
+        //console.log(this.props.visibilityFilter); 
+        const visibleTodos = getVisibleTodos(this.props.todos,
+        this.props.visibilityFilter);
         return (< div >
             < input ref = {
                 node => {
@@ -134,7 +148,7 @@ class TodoApp extends Component {
                         this.input.value = "";
                     }
                 } > Add TODO < /button> < ul > todoki: {
-                    this.props.todos.map(todo => {
+                    visibleTodos.map(todo => {
                         return <li onClick = {
                             () => {
                                 storeToDo.dispatch({
@@ -166,9 +180,7 @@ class TodoApp extends Component {
                             }
 
                             const renderToDo = () => {
-                                ReactDOM.render(< TodoApp todos = {
-                                    storeToDo.getState().todos
-                                }
+                                ReactDOM.render(< TodoApp {...storeToDo.getState()}
                                     / >, document.getElementById("todo"));
                             }
                             storeToDo.subscribe(renderToDo);
