@@ -21,7 +21,7 @@ const visibilityFilter = (
         case "SET_VISIBILITY_FILTER":
             return action.filter;
         default:
-            return "SHOW_ALL";
+            return state;
     }
 };
 
@@ -97,9 +97,14 @@ const {
 
 const FilterLink = ({
     filter,
+    currentFilter,
     children
 }) => {
-    return (< a href = "#"
+     if(currentFilter === filter) {
+            return <span>{children}</span>
+        }
+    return (
+        < a href = "#"
         onClick = {
             e => {
                 e.preventDefault();
@@ -125,13 +130,40 @@ const getVisibleTodos = (todos, filter) =>
  }
 let nextTodoId = 0;
 
+//presentational component
+const ToDo = ({onClick, completed, text}) => (
+
+
+    <li onClick = {
+                           onClick
+                        }
+                            style = {
+                                {
+                                    textDecoration: completed ? "line-through" : "none"
+                                }
+                            }
+                             > {
+                                text
+                            } < /li>
+)
+
+
+const ToDoList = ({todos, onClick}) => (
+    <ul>
+    {todos.map(todo => (
+        <ToDo key={todo.id} {...todo} onClick={() => onClick(todo.id)}/>
+    ))}
+    </ul>
+)
 
 class TodoApp extends Component {
     render() {
        // console.log(this.props.todos);    
         //console.log(this.props.visibilityFilter); 
-        const visibleTodos = getVisibleTodos(this.props.todos,
-        this.props.visibilityFilter);
+        const { todos, visibilityFilter } = this.props; 
+        const visibleTodos = getVisibleTodos(todos,
+        visibilityFilter);
+        // console.log(visibleTodos);
         return (< div >
             < input ref = {
                 node => {
@@ -147,33 +179,20 @@ class TodoApp extends Component {
                         });
                         this.input.value = "";
                     }
-                } > Add TODO < /button> < ul > todoki: {
-                    visibleTodos.map(todo => {
-                        return <li onClick = {
-                            () => {
-                                storeToDo.dispatch({
-                                    type: "TOGGLE_TODO",
-                                    id: todo.id
-                                });
-                            }
-                        }
-                            style = {
-                                {
-                                    textDecoration: todo.completed ? "line-through" : "none"
-                                }
-                            }
-                            key = {
-                                todo.id
-                            } > {
-                                todo.text
-                            } < /li>}) } < /ul >
+                } > Add TODO < /button>
+                <ToDoList 
+                todos={visibleTodos}
+                onClick = {(id) => {storeToDo.dispatch({
+                    type: "TOGGLE_TODO",
+                    id
+                })}}/>
 
                             <p>Show: {' '}
-                                <FilterLink filter="SHOW_ALL">All</FilterLink>
+                                <FilterLink filter="SHOW_ALL" currentFilter={visibilityFilter}>All</FilterLink>
                                 {' '}
-                                <FilterLink filter="SHOW_ACTIVE">Active</FilterLink>
+                                <FilterLink filter="SHOW_ACTIVE" currentFilter={visibilityFilter}>Active</FilterLink>
                                 {' '}
-                                <FilterLink filter="SHOW_COMPLETED">Completed</FilterLink>
+                                <FilterLink filter="SHOW_COMPLETED" currentFilter={visibilityFilter}>Completed</FilterLink>
                             </p>
                             < /div >);
                             }
